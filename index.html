@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Shell | Techno Producer</title>
+
+    <!-- SEO & Open Graph -->
+    <meta name="description" content="Home Shell — Techno & Melodic Techno Producer. Owner of Dark Mirror Records.">
+    <meta property="og:title" content="Home Shell | Linktree">
+    <meta property="og:description" content="Techno & Melodic Techno Producer. Owner of Dark Mirror Records.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* ═══════════════════════════════════════════════
+           CSS VARIABLES
+        ═══════════════════════════════════════════════ */
+        :root {
+            --bg-dark: #050505;
+            --bg-card: rgba(16, 20, 28, 0.75);
+            --bg-card-hover: rgba(24, 30, 42, 0.85);
+            --text-primary: #ffffff;
+            --text-secondary: #6e7681;
+            --text-accent: #58a6ff;
+            --border-color: rgba(48, 54, 61, 0.4);
+            --glow-color: rgba(88, 166, 255, 0.2);
+            --max-width: 480px;
+            --radius-md: 16px;
+            --transition-speed: 0.3s;
+        }
+
+        /* ═══════════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ═══════════════════════════════════════════════
+           CUSTOM CURSOR
+        ═══════════════════════════════════════════════ */
+        .cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--text-accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid rgba(88, 166, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.15s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-ring.hovering {
+            width: 56px;
+            height: 56px;
+            border-color: rgba(88, 166, 255, 0.8);
+        }
+
+        /* ═══════════════════════════════════════════════
+           CINEMATIC INTRO
+        ═══════════════════════════════════════════════ */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .intro-overlay .intro-title {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: intro-pulse 2s ease-in-out infinite, intro-fadein 1s 0.3s forwards;
+        }
+
+        .intro-overlay .intro-enter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: 1px solid var(--text-accent);
+            padding: 12px 32px;
+            border-radius: 30px;
+            opacity: 0;
+            animation: intro-fadein 1s 1s forwards;
+            transition: all 0.3s;
+        }
+
+        .intro-overlay .intro-enter:hover {
+            background: var(--text-accent);
+            color: #000;
+        }
+
+        .intro-overlay .intro-line {
+            position: absolute;
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, var(--text-accent), transparent);
+            bottom: 60px;
+            opacity: 0;
+            animation: intro-fadein 1s 1.5s forwards, intro-bounce 1.5s 1.5s ease-in-out infinite;
+        }
+
+        .intro-overlay.closing {
+            animation: intro-curtain 1s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        @keyframes intro-pulse {
+
+            0%,
+            100% {
+                text-shadow: 0 0 20px rgba(88, 166, 255, 0.1);
+            }
+
+            50% {
+                text-shadow: 0 0 40px rgba(88, 166, 255, 0.3);
+            }
+        }
+
+        @keyframes intro-fadein {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes intro-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        @keyframes intro-curtain {
+            0% {
+                clip-path: inset(0 0 0 0);
+            }
+
+            100% {
+                clip-path: inset(50% 0 50% 0);
+                opacity: 0;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
+           WEBGL CANVAS BACKGROUND
+        ═══════════════════════════════════════════════ */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Film grain overlay */
+        .grain-overlay {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            animation: grain 0.5s steps(5) infinite;
+        }
+
+        @keyframes grain {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(-5%, -10%);
+            }
+
+            50% {
+                transform: translate(5%, 5%);
+            }
+
+            75% {
+                transform: translate(-10%, 5%);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
+           MAIN CONTAINER
+        ═══════════════════════════════════════════════ */
+        .page-wrapper {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 24px 120px;
+            min-height: 100vh;
+        }
+
+        main {
+            width: 100%;
+            max-width: var(--max-width);
+        }
+
+        /* ═══════════════════════════════════════════════
+           PARALLAX SECTIONS
+        ═══════════════════════════════════════════════ */
+        .parallax-layer {
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+
+        /* ═══════════════════════════════════════════════
+           PROFILE
+        ═══════════════════════════════════════════════ */
+        header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .avatar-wrap {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 24px;
+        }
+
+        .avatar-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--text-accent), #a855f7, #ec4899, var(--text-accent));
+            animation: avatar-spin 4s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes avatar-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--bg-dark);
+            z-index: 1;
+        }
+
+        /* ═══════════════════════════════════════════════
+           GLITCH TITLE (CSS gradient mask + JS glitch)
+        ═══════════════════════════════════════════════ */
+        .glitch-title {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            /* Gradient mask inside text */
+            background: linear-gradient(90deg,
+                    #fff 0%,
+                    #58a6ff 20%,
+                    #a855f7 40%,
+                    #ec4899 60%,
+                    #58a6ff 80%,
+                    #fff 100%);
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 4s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes gradient-shift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Glitch pseudo-elements */
+        .glitch-title::before,
+        .glitch-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+        }
+
+        .glitch-title:hover::before {
+            animation: glitch-top 0.3s linear infinite;
+            opacity: 0.8;
+            clip-path: inset(0 0 50% 0);
+        }
+
+        .glitch-title:hover::after {
+            animation: glitch-bottom 0.3s linear infinite;
+            opacity: 0.8;
+            clip-path: inset(50% 0 0 0);
+        }
+
+        @keyframes glitch-top {
+            0% {
+                transform: translate(2px, -1px);
+            }
+
+            25% {
+                transform: translate(-2px, 1px);
+            }
+
+            50% {
+                transform: translate(1px, 2px);
+            }
+
+            75% {
+                transform: translate(-1px, -2px);
+            }
+
+            100% {
+                transform: translate(2px, 1px);
+            }
+        }
+
+        @keyframes glitch-bottom {
+            0% {
+                transform: translate(-2px, 1px);
+            }
+
+            25% {
+                transform: translate(2px, -1px);
+            }
+
+            50% {
+                transform: translate(-1px, -2px);
+            }
+
+            75% {
+                transform: translate(1px, 2px);
+            }
+
+            100% {
+                transform: translate(-2px, -1px);
+            }
+        }
+
+        .username {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-accent);
+            font-size: 13px;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(88, 166, 255, 0.08);
+            border: 1px solid rgba(88, 166, 255, 0.15);
+            margin-bottom: 20px;
+            transition: all 0.25s;
+        }
+
+        .username:hover {
+            background: rgba(88, 166, 255, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.15);
+        }
+
+        .bio {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════════════
+           STATS
+        ═══════════════════════════════════════════════ */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            margin: 32px 0;
+            background: var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 16px 8px;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .stat-val {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* ═══════════════════════════════════════════════
+           LINK CARDS
+        ═══════════════════════════════════════════════ */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .section-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 2px;
+            font-weight: 600;
+        }
+
+        .btn-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .btn-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.04) 50%, transparent 60%);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .btn-link:hover {
+            transform: translateY(-3px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: var(--bg-card-hover);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-link:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-icon {
+            font-size: 22px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .btn-link:hover .btn-icon {
+            transform: scale(1.12) rotate(-3deg);
+        }
+
+        .btn-content {
+            flex: 1;
+        }
+
+        .btn-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .btn-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .btn-arrow {
+            color: var(--text-secondary);
+            opacity: 0.4;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .btn-link:hover .btn-arrow {
+            opacity: 1;
+            transform: translateX(4px);
+            color: var(--text-primary);
+        }
+
+        /* Brand hover colors */
+        .btn-tg:hover {
+            border-color: rgba(34, 158, 217, 0.4);
+            box-shadow: 0 8px 32px rgba(34, 158, 217, 0.1);
+        }
+
+        .btn-tg:hover .btn-icon {
+            color: #229ED9;
+            background: rgba(34, 158, 217, 0.12);
+        }
+
+        .btn-bp:hover {
+            border-color: rgba(1, 255, 149, 0.4);
+            box-shadow: 0 8px 32px rgba(1, 255, 149, 0.1);
+        }
+
+        .btn-bp:hover .btn-icon {
+            color: #01ff95;
+            background: rgba(1, 255, 149, 0.12);
+        }
+
+        .btn-vk:hover {
+            border-color: rgba(0, 119, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 119, 255, 0.1);
+        }
+
+        .btn-vk:hover .btn-icon {
+            color: #0077FF;
+            background: rgba(0, 119, 255, 0.12);
+        }
+
+        .btn-ig:hover {
+            border-color: rgba(225, 48, 108, 0.4);
+            box-shadow: 0 8px 32px rgba(225, 48, 108, 0.1);
+        }
+
+        .btn-ig:hover .btn-icon {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ═══════════════════════════════════════════════
+           AUDIO PLAYER
+        ═══════════════════════════════════════════════ */
+        .player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(8, 10, 16, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .player.visible {
+            transform: translateY(0);
+        }
+
+        .player-art {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-accent);
+            font-size: 18px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .player-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-track {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .player-artist {
+            font-size: 11px;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-accent);
+        }
+
+        .player-btn.play-btn {
+            background: var(--text-accent);
+            color: #000;
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+        }
+
+        .player-btn.play-btn:hover {
+            background: #79baff;
+            transform: scale(1.08);
+        }
+
+        .player-progress {
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+        }
+
+        .player-progress-bar {
+            height: 100%;
+            width: 35%;
+            background: var(--text-accent);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .player-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        /* ═══════════════════════════════════════════════
+           VISUALIZER BARS (in player)
+        ═══════════════════════════════════════════════ */
+        .visualizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .visualizer .bar {
+            width: 3px;
+            background: var(--text-accent);
+            border-radius: 2px;
+            animation: eq-bar 0.6s ease-in-out infinite alternate;
+            opacity: 0.7;
+        }
+
+        .visualizer .bar:nth-child(1) {
+            height: 8px;
+            animation-delay: 0s;
+        }
+
+        .visualizer .bar:nth-child(2) {
+            height: 16px;
+            animation-delay: 0.1s;
+        }
+
+        .visualizer .bar:nth-child(3) {
+            height: 10px;
+            animation-delay: 0.2s;
+        }
+
+        .visualizer .bar:nth-child(4) {
+            height: 20px;
+            animation-delay: 0.3s;
+        }
+
+        .visualizer .bar:nth-child(5) {
+            height: 6px;
+            animation-delay: 0.15s;
+        }
+
+        .visualizer .bar:nth-child(6) {
+            height: 14px;
+            animation-delay: 0.25s;
+        }
+
+        @keyframes eq-bar {
+            0% {
+                transform: scaleY(0.3);
+            }
+
+            100% {
+                transform: scaleY(1);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════════ */
+        footer {
+            margin-top: 48px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.4;
+        }
+
+        /* ═══════════════════════════════════════════════
+           SCROLL ANIMATIONS
+        ═══════════════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ═══════════════════════════════════════════════
+           MOBILE
+        ═══════════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .page-wrapper {
+                padding: 40px 16px 120px;
+            }
+
+            .glitch-title {
+                font-size: 28px;
+            }
+
+            .stats {
+                gap: 0px;
+            }
+
+            .stat-val {
+                font-size: 17px;
+            }
+
+            .intro-overlay .intro-title {
+                font-size: 32px;
+                letter-spacing: 0.1em;
+            }
+
+            body {
+                cursor: auto;
+            }
+
+            .cursor-dot,
+            .cursor-ring {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ═══════════ CUSTOM CURSOR ═══════════ -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ═══════════ CINEMATIC INTRO ═══════════ -->
+    <div class="intro-overlay" id="introOverlay">
+        <h2 class="intro-title">Home Shell</h2>
+        <span class="intro-enter">Войти</span>
+        <div class="intro-line"></div>
+    </div>
+
+    <!-- ═══════════ WEBGL BACKGROUND ═══════════ -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="grain-overlay"></div>
+
+    <!-- ═══════════ MAIN PAGE ═══════════ -->
+    <div class="page-wrapper">
+        <main>
+            <!-- PROFILE -->
+            <header class="parallax-layer" data-speed="0.02">
+                <div class="avatar-wrap reveal">
+                    <img src="avatar.png" alt="Home Shell" class="avatar">
+                </div>
+
+                <div class="reveal" style="transition-delay: 0.1s;">
+                    <h1 class="glitch-title" data-text="HOME SHELL" id="glitchTitle">HOME SHELL</h1>
+                </div>
+
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <a href="https://t.me/Home_Shell" class="username" target="_blank">
+                        <i class="ph ph-at"></i>HOME_SHELL
+                    </a>
+                </div>
+
+                <p class="bio reveal" style="transition-delay: 0.3s;">
+                    Techno & Melodic Techno Producer<br>
+                    Owner of Dark Mirror Records<br>
+                    Artist: DAR, AREY, Deepwibe Underground
+                </p>
+            </header>
+
+            <!-- STATS -->
+            <section class="stats parallax-layer reveal" data-speed="0.01" style="transition-delay: 0.35s;">
+                <div class="stat-item">
+                    <span class="stat-val">5+</span>
+                    <span class="stat-label">Лет</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-val">8+</span>
+                    <span class="stat-label">Лейблов</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-val">100+</span>
+                    <span class="stat-label">Beatport</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-val">2</span>
+                    <span class="stat-label">Проекта</span>
+                </div>
+            </section>
+
+            <!-- LINKS -->
+            <section class="links parallax-layer" data-speed="0.005">
+                <span class="section-label reveal" style="transition-delay: 0.4s;">Связаться & Слушать</span>
+
+                <a href="https://t.me/Home_Shell" target="_blank" class="btn-link btn-tg reveal"
+                    style="transition-delay: 0.45s;">
+                    <div class="btn-icon"><i class="ph ph-telegram-logo"></i></div>
+                    <div class="btn-content">
+                        <span class="btn-title">Telegram</span>
+                        <span class="btn-subtitle">Личные сообщения / Букинг</span>
+                    </div>
+                    <i class="ph ph-caret-right btn-arrow"></i>
+                </a>
+
+                <a href="https://www.beatport.com/artist/home-shell/746104" target="_blank"
+                    class="btn-link btn-bp reveal" style="transition-delay: 0.5s;">
+                    <div class="btn-icon"><i class="ph ph-music-notes"></i></div>
+                    <div class="btn-content">
+                        <span class="btn-title">Beatport</span>
+                        <span class="btn-subtitle">Купить последние релизы</span>
+                    </div>
+                    <i class="ph ph-caret-right btn-arrow"></i>
+                </a>
+
+                <a href="https://vk.com/one.homeshell" target="_blank" class="btn-link btn-vk reveal"
+                    style="transition-delay: 0.55s;">
+                    <div class="btn-icon"><i class="ph ph-users-three"></i></div>
+                    <div class="btn-content">
+                        <span class="btn-title">Вконтакте</span>
+                        <span class="btn-subtitle">Официальное сообщество</span>
+                    </div>
+                    <i class="ph ph-caret-right btn-arrow"></i>
+                </a>
+
+                <a href="https://www.instagram.com/home_shell.one/" target="_blank" class="btn-link btn-ig reveal"
+                    style="transition-delay: 0.6s;">
+                    <div class="btn-icon"><i class="ph ph-instagram-logo"></i></div>
+                    <div class="btn-content">
+                        <span class="btn-title">Instagram</span>
+                        <span class="btn-subtitle">Фото и анонсы мероприятий</span>
+                    </div>
+                    <i class="ph ph-caret-right btn-arrow"></i>
+                </a>
+            </section>
+
+            <footer class="reveal" style="transition-delay: 0.65s;">
+                © 2024 Home Shell. All Rights Reserved.
+            </footer>
+        </main>
+    </div>
+
+    <!-- ═══════════ AUDIO PLAYER ═══════════ -->
+    <div class="player" id="audioPlayer">
+        <div class="player-progress">
+            <div class="player-progress-bar" id="progressBar"></div>
+        </div>
+        <div class="player-art">
+            <i class="ph ph-vinyl-record"></i>
+        </div>
+        <div class="player-info">
+            <span class="player-track">Ожидание трека...</span>
+            <span class="player-artist">Home Shell</span>
+        </div>
+        <div class="visualizer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="player-controls">
+            <button class="player-btn" title="Назад"><i class="ph ph-skip-back"></i></button>
+            <button class="player-btn play-btn" title="Играть"><i class="ph ph-play-fill"></i></button>
+            <button class="player-btn" title="Вперед"><i class="ph ph-skip-forward"></i></button>
+        </div>
+        <span class="player-time">0:00 / 0:00</span>
+    </div>
+
+    <!-- ═══════════ SCRIPTS ═══════════ -->
+    <script>
+        (function () {
+            'use strict';
+
+            /* ═══════════════════════════════════════════════
+               1. CINEMATIC INTRO + Kick Sound
+            ═══════════════════════════════════════════════ */
+            const intro = document.getElementById('introOverlay');
+
+            function playKick() {
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    // Kick drum synthesis
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.frequency.setValueAtTime(150, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                    gain.gain.setValueAtTime(1, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.5);
+
+                    // Sub bass layer
+                    const osc2 = ctx.createOscillator();
+                    const gain2 = ctx.createGain();
+                    osc2.connect(gain2);
+                    gain2.connect(ctx.destination);
+                    osc2.frequency.setValueAtTime(60, ctx.currentTime);
+                    osc2.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+                    gain2.gain.setValueAtTime(0.8, ctx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+                    osc2.start(ctx.currentTime);
+                    osc2.stop(ctx.currentTime + 0.8);
+                } catch (e) { /* audio not supported */ }
+            }
+
+            intro.addEventListener('click', function () {
+                playKick();
+                this.classList.add('closing');
+                // Show player after intro
+                setTimeout(() => {
+                    document.getElementById('audioPlayer').classList.add('visible');
+                }, 600);
+                setTimeout(() => {
+                    this.style.display = 'none';
+                    // Trigger reveal animations
+                    triggerReveals();
+                }, 1000);
+            });
+
+            /* ═══════════════════════════════════════════════
+               2. CUSTOM CURSOR
+            ═══════════════════════════════════════════════ */
+            const dot = document.getElementById('cursorDot');
+            const ring = document.getElementById('cursorRing');
+            let mouseX = 0, mouseY = 0;
+            let ringX = 0, ringY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                dot.style.left = mouseX - 3 + 'px';
+                dot.style.top = mouseY - 3 + 'px';
+            });
+
+            function animateCursor() {
+                ringX += (mouseX - ringX) * 0.15;
+                ringY += (mouseY - ringY) * 0.15;
+                ring.style.left = ringX - 18 + 'px';
+                ring.style.top = ringY - 18 + 'px';
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Hover effect on interactive elements
+            document.querySelectorAll('a, button, .intro-overlay').forEach(el => {
+                el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+            });
+
+            /* ═══════════════════════════════════════════════
+               3. WEBGL-LIKE LIQUID BACKGROUND (Canvas 2D)
+            ═══════════════════════════════════════════════ */
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            let blobs = [];
+            const BLOB_COUNT = 6;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            // Initialize blobs
+            for (let i = 0; i < BLOB_COUNT; i++) {
+                blobs.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: 150 + Math.random() * 200,
+                    color: i % 3 === 0
+                        ? 'rgba(47, 129, 247, 0.08)'
+                        : i % 3 === 1
+                            ? 'rgba(168, 85, 247, 0.06)'
+                            : 'rgba(236, 72, 153, 0.05)'
+                });
+            }
+
+            let targetMouseX = w / 2, targetMouseY = h / 2;
+            let smoothMouseX = w / 2, smoothMouseY = h / 2;
+
+            document.addEventListener('mousemove', e => {
+                targetMouseX = e.clientX;
+                targetMouseY = e.clientY;
+            });
+
+            function drawBackground() {
+                ctx.clearRect(0, 0, w, h);
+
+                // Smooth mouse follow
+                smoothMouseX += (targetMouseX - smoothMouseX) * 0.03;
+                smoothMouseY += (targetMouseY - smoothMouseY) * 0.03;
+
+                blobs.forEach((blob, i) => {
+                    // Move blobs
+                    blob.x += blob.vx;
+                    blob.y += blob.vy;
+
+                    // Mouse influence
+                    const dx = smoothMouseX - blob.x;
+                    const dy = smoothMouseY - blob.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 400) {
+                        blob.x += dx * 0.002;
+                        blob.y += dy * 0.002;
+                    }
+
+                    // Bounce
+                    if (blob.x < -100 || blob.x > w + 100) blob.vx *= -1;
+                    if (blob.y < -100 || blob.y > h + 100) blob.vy *= -1;
+
+                    // Draw
+                    const gradient = ctx.createRadialGradient(blob.x, blob.y, 0, blob.x, blob.y, blob.radius);
+                    gradient.addColorStop(0, blob.color);
+                    gradient.addColorStop(1, 'transparent');
+                    ctx.beginPath();
+                    ctx.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(drawBackground);
+            }
+            drawBackground();
+
+            /* ═══════════════════════════════════════════════
+               4. GLITCH TEXT EFFECT
+            ═══════════════════════════════════════════════ */
+            const glitchEl = document.getElementById('glitchTitle');
+            const originalText = glitchEl.textContent;
+            const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмноп';
+            let glitchInterval = null;
+
+            glitchEl.addEventListener('mouseenter', () => {
+                let iteration = 0;
+                clearInterval(glitchInterval);
+                glitchInterval = setInterval(() => {
+                    glitchEl.textContent = originalText
+                        .split('')
+                        .map((char, i) => {
+                            if (i < iteration) return originalText[i];
+                            return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                        })
+                        .join('');
+                    if (iteration >= originalText.length) {
+                        clearInterval(glitchInterval);
+                    }
+                    iteration += 1 / 2;
+                }, 40);
+            });
+
+            glitchEl.addEventListener('mouseleave', () => {
+                clearInterval(glitchInterval);
+                glitchEl.textContent = originalText;
+            });
+
+            /* ═══════════════════════════════════════════════
+               5. PARALLAX SCROLLING
+            ═══════════════════════════════════════════════ */
+            const parallaxLayers = document.querySelectorAll('.parallax-layer');
+
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                parallaxLayers.forEach(layer => {
+                    const speed = parseFloat(layer.dataset.speed) || 0.02;
+                    layer.style.transform = `translateY(${scrollY * speed * -50}px)`;
+                });
+            });
+
+            /* ═══════════════════════════════════════════════
+               6. SCROLL REVEAL
+            ═══════════════════════════════════════════════ */
+            const reveals = document.querySelectorAll('.reveal');
+
+            function triggerReveals() {
+                reveals.forEach((el, i) => {
+                    setTimeout(() => el.classList.add('visible'), i * 80);
+                });
+            }
+
+            // Fallback: if someone scrolls past intro
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach(el => observer.observe(el));
+
+            /* ═══════════════════════════════════════════════
+               7. PLAYER SKELETON (ready for MP3)
+            ═══════════════════════════════════════════════ */
+            // To activate: replace null with your MP3 URL
+            const TRACK_URL = null; // e.g. 'track.mp3'
+            const playBtn = document.querySelector('.play-btn');
+            let isPlaying = false;
+
+            playBtn.addEventListener('click', () => {
+                isPlaying = !isPlaying;
+                playBtn.innerHTML = isPlaying
+                    ? '<i class="ph ph-pause-fill"></i>'
+                    : '<i class="ph ph-play-fill"></i>';
+
+                // Toggle visualizer animation
+                document.querySelectorAll('.visualizer .bar').forEach(bar => {
+                    bar.style.animationPlayState = isPlaying ? 'running' : 'paused';
+                });
+            });
+
+        })();
+    </script>
+</body>
+
+</html>
