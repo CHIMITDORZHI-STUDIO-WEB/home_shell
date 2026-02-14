@@ -841,7 +841,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 10000;
+            z-index: 10001;
             background: rgba(16, 20, 28, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -1089,6 +1089,17 @@
             'use strict';
 
             /* ═══════════════════════════════════════════════
+               COOKIE BANNER (early init)
+            ═══════════════════════════════════════════════ */
+            const cookieBanner = document.getElementById('cookieBanner');
+            const cookieAccept = document.getElementById('cookieAccept');
+
+            cookieAccept.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookieBanner.classList.remove('visible');
+            });
+
+            /* ═══════════════════════════════════════════════
                1. CINEMATIC INTRO + Kick Sound
             ═══════════════════════════════════════════════ */
             const intro = document.getElementById('introOverlay');
@@ -1133,6 +1144,10 @@
                     this.style.display = 'none';
                     // Trigger reveal animations
                     triggerReveals();
+                    // Show cookie banner after intro
+                    if (!localStorage.getItem('cookiesAccepted')) {
+                        setTimeout(() => cookieBanner.classList.add('visible'), 1000);
+                    }
                 }, 1000);
             });
 
@@ -1329,21 +1344,6 @@
                 document.querySelectorAll('.visualizer .bar').forEach(bar => {
                     bar.style.animationPlayState = isPlaying ? 'running' : 'paused';
                 });
-            });
-
-            /* ═══════════════════════════════════════════════
-               8. COOKIE BANNER
-            ═══════════════════════════════════════════════ */
-            const cookieBanner = document.getElementById('cookieBanner');
-            const cookieAccept = document.getElementById('cookieAccept');
-
-            if (!localStorage.getItem('cookiesAccepted')) {
-                setTimeout(() => cookieBanner.classList.add('visible'), 1500);
-            }
-
-            cookieAccept.addEventListener('click', () => {
-                localStorage.setItem('cookiesAccepted', 'true');
-                cookieBanner.classList.remove('visible');
             });
 
         })();
